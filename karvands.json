@@ -1,0 +1,24 @@
+{
+    "full_name": [
+        "ehsan",
+        "gholami"
+    ],
+    "email": "test@gmail.com",
+    "city": "estahban",
+    "education": "engineering",
+    "skills": [
+        "coding gaming"
+    ]
+}{
+    "full_name": [
+        "ehsan",
+        "gholami"
+    ],
+    "email": "test1234@gmail.com",
+    "city": "estahban",
+    "education": "engineering",
+    "skills": [
+        "coding",
+        "gaming"
+    ]
+}
