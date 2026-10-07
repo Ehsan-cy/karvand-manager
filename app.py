@@ -164,6 +164,94 @@ while True:
     
                         for skill in karvand["skills"]:
                             print(skill["name"], "| Level:", skill["level"], "| Score:", skill["score"])
-    
 
-           
+    elif e == "5" or e == "edit":
+            edit_id = input("Please enter the ID of the member to edit: ").strip()
+            with open(path, "r", encoding="utf-8") as file:
+                data = json.load(file)
+                karvands = data["karvands"]
+    
+                for karvand in karvands:
+                    if str(karvand["id"]) == edit_id:
+                        print("Editing member:", karvand["name"])
+                        new_name = input(f"Enter new name (current: {karvand['name']}): ").strip()
+                        new_email = input(f"Enter new email (current: {karvand['email']}): ").strip()
+                        new_city = input(f"Enter new city (current: {karvand['city']}): ").strip()
+                        new_degree = input(f"Enter new degree (current: {karvand['education']['degree']}): ").strip()
+                        new_field = input(f"Enter new field (current: {karvand['education']['field']}): ").strip()
+                        new_skills = input("Do you want to edit skills? (yes/no): ").strip().lower()
+    
+                        if new_name:
+                            karvand["name"] = new_name
+                        if new_email:
+                            karvand["email"] = new_email
+                        if new_city:
+                            karvand["city"] = new_city
+                        if new_degree:
+                            karvand["education"]["degree"] = new_degree
+                        if new_field:
+                            karvand["education"]["field"] = new_field
+                        if new_skills == "yes":
+                            skills = []
+                            while True:
+                                skill_name = input("Please enter a skill name: ").strip()
+                                skill_level = input("Please enter the skill level: ").strip()
+    
+                                while True:
+                                    try:
+                                        score = int(input("Please rate your skill from 0 to 100: "))
+                                        if 0 <= score <= 100:
+                                            break
+                                        print("Score must be between 0 and 100.")
+                                    except ValueError:
+                                        print("Please enter a number.")
+    
+                                skills.append({
+                                    "name": skill_name,
+                                    "level": skill_level,
+                                    "score": score
+                                })
+    
+                                more = input("Do you want to add another skill? (yes/no): ").lower()
+                                if more != "yes":
+                                    break
+    
+                            karvand["skills"] = skills
+    
+                    
+                        with open(path, "w", encoding="utf-8") as file:
+                            json.dump(data, file, ensure_ascii=False, indent=2)
+    
+                        print("Member updated successfully.")
+                        break
+                else:
+                    print("Member not found.")
+    
+    elif e == "6" or e == "delete":
+        delete_id = input("Please enter the ID of the member to delete: ").strip()
+
+        with open(path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+
+        karvands = data["karvands"]
+
+        for karvand in karvands:
+            if str(karvand["id"]) == delete_id:
+                karvands.remove(karvand)
+
+                with open(path, "w", encoding="utf-8") as file:
+                    json.dump(data, file, ensure_ascii=False, indent=2)
+
+                print("Member deleted successfully.")
+                break
+                
+        else:
+            print("Member not found.")
+                
+                
+    elif e == "7" or e == "exit" :
+        print("Bye!.")
+        break
+    else:
+        print("Invalid option. Please try again.")
+        
