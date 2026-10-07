@@ -111,4 +111,59 @@ while True:
                     for skill in karvand["skills"]:
                         print(skill["name"], "| Level:", skill["level"], "| Score:", skill["score"])
 
+    elif e == "3" or e == "search":
+            search_id = input("please enter the ID: ").strip()
+            with open(path, "r", encoding="utf-8") as file:
+                data = json.load(file)
+                karvands = data["karvands"]
+    
+                found = False
+                for karvand in karvands:
+                    if str(karvand["id"]) == search_id:
+                        print("ID:", karvand["id"])
+                        print("Name:", karvand["name"])
+                        print("Email:", karvand["email"])
+                        print("City:", karvand["city"])
+                        print("Degree:", karvand["education"]["degree"])
+                        print("Field:", karvand["education"]["field"])
+                        print("Skills:")
+    
+                        for skill in karvand["skills"]:
+                            print(skill["name"], "| Level:", skill["level"], "| Score:", skill["score"])
+    
+                        found = True
+                        break
+    
+                if not found:
+                    print("Member not found.")
+    
+    elif e == "4" or e == "search by skill":
+            skill_name = input("Please enter the skill name to search: ").strip().lower()
+            with open(path, "r", encoding="utf-8") as file:
+                data = json.load(file)
+                karvands = data["karvands"]
+    
+                found_members = []
+                for karvand in karvands:
+                    for skill in karvand["skills"]:
+                        if skill["name"].lower() == skill_name.lower():
+                            found_members.append(karvand)
+                            break
+    
+                if not found_members:
+                    print("No members found with that skill.")
+                else:
+                    for karvand in found_members:
+                        print("ID:", karvand["id"])
+                        print("Name:", karvand["name"])
+                        print("Email:", karvand["email"])
+                        print("City:", karvand["city"])
+                        print("Degree:", karvand["education"]["degree"])
+                        print("Field:", karvand["education"]["field"])
+                        print("Skills:")
+    
+                        for skill in karvand["skills"]:
+                            print(skill["name"], "| Level:", skill["level"], "| Score:", skill["score"])
+    
+
            
